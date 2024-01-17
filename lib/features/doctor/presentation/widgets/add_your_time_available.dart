@@ -1,0 +1,103 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:esteshary_doctor/core/app_export.dart';
+import 'package:esteshary_doctor/core/utils/app_strings.dart';
+import 'package:esteshary_doctor/features/doctor/presentation/manager/doctor_cubit.dart';
+
+import '../../../../core/widgets/custom_app_bottom.dart';
+import '../../../../core/widgets/custom_text_form_field.dart';
+import 'days_check_box_list_view.dart';
+
+class AddYourTimeAvailable extends StatelessWidget {
+  const AddYourTimeAvailable({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<DoctorCubit, DoctorState>(
+      builder: (context, state) {
+        var cubit = DoctorCubit().get(context);
+        return Container(
+          padding: EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                AppStrings.timeAvailable,
+                style: CustomTextStyles.bodyLargeBlack900,
+              ),
+              5.height,
+              const Divider(
+                endIndent: 2,
+                indent: 2,
+              ),
+              5.height,
+               DayCheckBoxListView(cubit: cubit),
+              20.height,
+              Row(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        AppStrings.from,
+                        style: CustomTextStyles.bodyLargeBlack900,
+                      ),
+                      CustomTextFormField(
+                        width: 165.w,
+                        controller: cubit.fromController,
+                        textInputType: TextInputType.datetime,
+                        onTap: () async {
+                          TimeOfDay? date;
+                          FocusScope.of(context).requestFocus(new FocusNode());
+                          date = (await showTimePicker(
+                            context: context,
+                            initialTime: TimeOfDay.now(),
+                          ));
+                          cubit.fromController.text =
+                              date!.format(context).toString();
+                        },
+                      ),
+                    ],
+                  ),
+                  20.width,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        AppStrings.to,
+                        style: CustomTextStyles.bodyLargeBlack900,
+                      ),
+                      CustomTextFormField(
+                        onTap: () async {
+                          TimeOfDay? date;
+                          FocusScope.of(context).requestFocus(new FocusNode());
+                          date = (await showTimePicker(
+                            context: context,
+                            initialTime: TimeOfDay.now(),
+                          ));
+                          cubit.toController.text =
+                              date!.format(context).toString();
+                        },
+                        width: 165.w,
+                        controller: cubit.toController,
+                        textInputType: TextInputType.datetime,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              20.height,
+              CustomAppBottom(
+                  label: AppStrings.save,
+                  onPressed: () {
+                    cubit.doctorAddTime();
+                  }),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
