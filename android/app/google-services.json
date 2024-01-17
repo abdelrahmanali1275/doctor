@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "596778053899",
+    "project_id": "estashary",
+    "storage_bucket": "estashary.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:596778053899:android:e32bdc2f6d14fc91eb720e",
+        "android_client_info": {
+          "package_name": "com.doctor.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB16NsNFQYBOv1VDp11lljiuQxJER9w4XE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:596778053899:android:c242452a315dd1caeb720e",
+        "android_client_info": {
+          "package_name": "com.naraakom.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB16NsNFQYBOv1VDp11lljiuQxJER9w4XE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:596778053899:android:3702caaae84f521deb720e",
+        "android_client_info": {
+          "package_name": "com.naraakomadmin.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB16NsNFQYBOv1VDp11lljiuQxJER9w4XE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
