@@ -16,17 +16,9 @@ class AddYourTimeAvailable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-<<<<<<< HEAD
     return BlocConsumer<DoctorCubit, DoctorState>(
       builder: (context, state) {
-
         var cubit = DoctorCubit().get(context);
-
-=======
-    return BlocBuilder<DoctorCubit, DoctorState>(
-      builder: (context, state) {
-        var cubit = DoctorCubit().get(context);
->>>>>>> origin/main
         return Container(
           padding: EdgeInsets.all(20),
           child: Column(
@@ -42,7 +34,6 @@ class AddYourTimeAvailable extends StatelessWidget {
                 indent: 2,
               ),
               5.height,
-<<<<<<< HEAD
               DayCheckBoxListView(cubit: cubit),
               20.height,
               Form(
@@ -123,15 +114,13 @@ class AddYourTimeAvailable extends StatelessWidget {
               state is AddDoctorTimerLoading
                   ? Center(child: CircularProgressIndicator())
                   : CustomAppBottom(
-                      label: AppStrings.save,
-                      onPressed: () async{
-                        if (cubit.key.currentState!.validate()) {
-                          await cubit.addDoctorTimer();
-                        }
-
-                      }),
-=======
-               DayCheckBoxListView(cubit: cubit),
+                  label: AppStrings.save,
+                  onPressed: () async {
+                    if (cubit.key.currentState!.validate()) {
+                      await cubit.addDoctorTimer();
+                    }
+                  }),
+              DayCheckBoxListView(cubit: cubit),
               20.height,
               Row(
                 children: [
@@ -190,7 +179,7 @@ class AddYourTimeAvailable extends StatelessWidget {
               CustomAppBottom(
                   label: AppStrings.save,
                   onPressed: () {
-                    cubit.doctorAddTime();
+                    cubit.addDoctorTimer();
                   }),
             ],
           ),
