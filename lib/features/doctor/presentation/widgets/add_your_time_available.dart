@@ -16,11 +16,17 @@ class AddYourTimeAvailable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+<<<<<<< HEAD
     return BlocConsumer<DoctorCubit, DoctorState>(
       builder: (context, state) {
 
         var cubit = DoctorCubit().get(context);
 
+=======
+    return BlocBuilder<DoctorCubit, DoctorState>(
+      builder: (context, state) {
+        var cubit = DoctorCubit().get(context);
+>>>>>>> origin/main
         return Container(
           padding: EdgeInsets.all(20),
           child: Column(
@@ -36,6 +42,7 @@ class AddYourTimeAvailable extends StatelessWidget {
                 indent: 2,
               ),
               5.height,
+<<<<<<< HEAD
               DayCheckBoxListView(cubit: cubit),
               20.height,
               Form(
@@ -123,6 +130,68 @@ class AddYourTimeAvailable extends StatelessWidget {
                         }
 
                       }),
+=======
+               DayCheckBoxListView(cubit: cubit),
+              20.height,
+              Row(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        AppStrings.from,
+                        style: CustomTextStyles.bodyLargeBlack900,
+                      ),
+                      CustomTextFormField(
+                        width: 165.w,
+                        controller: cubit.fromController,
+                        textInputType: TextInputType.datetime,
+                        onTap: () async {
+                          TimeOfDay? date;
+                          FocusScope.of(context).requestFocus(new FocusNode());
+                          date = (await showTimePicker(
+                            context: context,
+                            initialTime: TimeOfDay.now(),
+                          ));
+                          cubit.fromController.text =
+                              date!.format(context).toString();
+                        },
+                      ),
+                    ],
+                  ),
+                  20.width,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        AppStrings.to,
+                        style: CustomTextStyles.bodyLargeBlack900,
+                      ),
+                      CustomTextFormField(
+                        onTap: () async {
+                          TimeOfDay? date;
+                          FocusScope.of(context).requestFocus(new FocusNode());
+                          date = (await showTimePicker(
+                            context: context,
+                            initialTime: TimeOfDay.now(),
+                          ));
+                          cubit.toController.text =
+                              date!.format(context).toString();
+                        },
+                        width: 165.w,
+                        controller: cubit.toController,
+                        textInputType: TextInputType.datetime,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              20.height,
+              CustomAppBottom(
+                  label: AppStrings.save,
+                  onPressed: () {
+                    cubit.doctorAddTime();
+                  }),
             ],
           ),
         );
@@ -135,6 +204,7 @@ class AddYourTimeAvailable extends StatelessWidget {
           showToast(text: state.message, state: ToastStates.success);
         }
       },
+
     );
   }
 }
