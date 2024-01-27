@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:esteshary_doctor/core/data/doctor_model.dart';
+import 'package:esteshary_doctor/core/data/models/doctor_model.dart';
 import 'package:esteshary_doctor/core/helper/save_data.dart';
 import 'package:esteshary_doctor/core/utils/app_strings.dart';
 import 'package:esteshary_doctor/core/utils/extension/widget.dart';

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import '../../helper/error/failure.dart';
-import '../doctor_model.dart';
+import '../models/doctor_model.dart';
 
 class FirebaseDoctor {
   Future<Either<ErrorFailure, DoctorModel>> getDoctorData(doctorId) async {

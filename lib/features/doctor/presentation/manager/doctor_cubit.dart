@@ -1,12 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:esteshary_doctor/core/data/doctor_model.dart';
 import 'package:esteshary_doctor/core/helper/save_data.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/utils/app_strings.dart';
-import '../model/add_doctor_time_model.dart';
+import '../../../../core/data/models/add_doctor_time_model.dart';
 
 part 'doctor_state.dart';
 

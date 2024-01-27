@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:esteshary_doctor/core/data/doctor_model.dart';
-import 'package:esteshary_doctor/core/data/doctor_model.dart';
-import 'package:esteshary_doctor/core/data/doctor_model.dart';
+import 'package:esteshary_doctor/core/data/models/doctor_model.dart';
+import 'package:esteshary_doctor/core/data/models/doctor_model.dart';
+import 'package:esteshary_doctor/core/data/models/doctor_model.dart';
 import 'package:esteshary_doctor/core/utils/app_strings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
