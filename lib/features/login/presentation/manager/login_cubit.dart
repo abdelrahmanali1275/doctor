@@ -21,6 +21,7 @@ class LoginCubit extends Cubit<LoginState> {
 
   var key = GlobalKey<FormState>();
   bool lookPass = true;
+
   //
   AuthHelper authHelper = AuthHelper();
   FirebaseDoctor firebaseDoctor = FirebaseDoctor();

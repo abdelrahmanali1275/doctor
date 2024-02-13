@@ -1,6 +1,6 @@
+import 'package:esteshary_doctor/features/add_time/presentation/widgets/your_time_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:esteshary_doctor/core/app_export.dart';
-import 'package:esteshary_doctor/features/doctor/presentation/widgets/your_time_list_view.dart';
 import '../../../../core/utils/app_strings.dart';
 import 'add_your_time_available.dart';
 
@@ -14,7 +14,7 @@ class DoctorScreenBody extends StatelessWidget {
       children: [
         const AddYourTimeAvailable(),
         10.height,
-       const Divider(
+        const Divider(
           thickness: 10,
         ),
         10.height,
@@ -33,7 +33,7 @@ class DoctorScreenBody extends StatelessWidget {
           indent: 2,
         ),
         20.height,
-       const YourTimeListView(),
+        const YourTimeListView(),
       ],
     );
   }

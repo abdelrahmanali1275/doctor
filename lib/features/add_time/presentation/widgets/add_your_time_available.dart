@@ -1,12 +1,12 @@
+import 'package:esteshary_doctor/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:esteshary_doctor/core/app_export.dart';
 import 'package:esteshary_doctor/core/utils/app_strings.dart';
-import 'package:esteshary_doctor/features/doctor/presentation/manager/doctor_cubit.dart';
-
 import '../../../../core/widgets/custom_app_bottom.dart';
 import '../../../../core/widgets/custom_text_form_field.dart';
 import '../../../../core/widgets/show_toast.dart';
+import '../manager/doctor_cubit.dart';
 import 'days_check_box_list_view.dart';
 
 class AddYourTimeAvailable extends StatelessWidget {
@@ -34,7 +34,42 @@ class AddYourTimeAvailable extends StatelessWidget {
                 indent: 2,
               ),
               5.height,
-              DayCheckBoxListView(cubit: cubit),
+              // DayCheckBoxListView(cubit: cubit),
+              Row(
+                children: [
+                  FilledButton(
+                    onPressed: () {
+                      showDatePicker(
+                              context: context,
+                              firstDate: DateTime(2024),
+                              lastDate: DateTime(2030))
+                          .then((value) {
+                        if (value != null) {
+                          cubit.addRequestDay = value;
+                          print(value.format());
+                          cubit.dayName();
+                        }
+                      });
+                    },
+                    child: Text("اختر اليوم"),
+                  ),
+                  10.width,
+                  Container(
+                    padding: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(25),
+                      color: AppColors.primary,
+                    ),
+                    child: context.read<DoctorCubit>().day2 == null
+                        ? Text("اليوم",
+                            style: CustomTextStyles.bodyMediumBlack20001)
+                        : Text(
+                            "${context.read<DoctorCubit>().day2} ${context.read<DoctorCubit>().addRequestDay!.format()} ",
+                            style: CustomTextStyles.bodyMediumBlack20001,
+                          ),
+                  ),
+                ],
+              ),
               20.height,
               Form(
                 key: cubit.key,
@@ -114,73 +149,18 @@ class AddYourTimeAvailable extends StatelessWidget {
               state is AddDoctorTimerLoading
                   ? Center(child: CircularProgressIndicator())
                   : CustomAppBottom(
-                  label: AppStrings.save,
-                  onPressed: () async {
-                    if (cubit.key.currentState!.validate()) {
-                      await cubit.addDoctorTimer();
-                    }
-                  }),
-              DayCheckBoxListView(cubit: cubit),
-              20.height,
-              Row(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        AppStrings.from,
-                        style: CustomTextStyles.bodyLargeBlack900,
-                      ),
-                      CustomTextFormField(
-                        width: 165.w,
-                        controller: cubit.fromController,
-                        textInputType: TextInputType.datetime,
-                        onTap: () async {
-                          TimeOfDay? date;
-                          FocusScope.of(context).requestFocus(new FocusNode());
-                          date = (await showTimePicker(
-                            context: context,
-                            initialTime: TimeOfDay.now(),
-                          ));
-                          cubit.fromController.text =
-                              date!.format(context).toString();
-                        },
-                      ),
-                    ],
-                  ),
-                  20.width,
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        AppStrings.to,
-                        style: CustomTextStyles.bodyLargeBlack900,
-                      ),
-                      CustomTextFormField(
-                        onTap: () async {
-                          TimeOfDay? date;
-                          FocusScope.of(context).requestFocus(new FocusNode());
-                          date = (await showTimePicker(
-                            context: context,
-                            initialTime: TimeOfDay.now(),
-                          ));
-                          cubit.toController.text =
-                              date!.format(context).toString();
-                        },
-                        width: 165.w,
-                        controller: cubit.toController,
-                        textInputType: TextInputType.datetime,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              20.height,
-              CustomAppBottom(
-                  label: AppStrings.save,
-                  onPressed: () {
-                    cubit.addDoctorTimer();
-                  }),
+                      label: AppStrings.save,
+                      onPressed: () {
+                        if (cubit.key.currentState!.validate() &&
+                            cubit.addRequestDay != null) {
+                          cubit.addDoctorTimer();
+                        }
+                        if (cubit.addRequestDay == null) {
+                          showToast(
+                              text: "برجاء اختيار اليوم من فضلك",
+                              state: ToastStates.error);
+                        }
+                      }),
             ],
           ),
         );
@@ -193,7 +173,6 @@ class AddYourTimeAvailable extends StatelessWidget {
           showToast(text: state.message, state: ToastStates.success);
         }
       },
-
     );
   }
 }

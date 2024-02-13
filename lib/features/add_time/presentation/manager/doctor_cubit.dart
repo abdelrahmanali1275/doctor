@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:esteshary_doctor/core/app_export.dart';
 import 'package:esteshary_doctor/core/helper/save_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,11 +18,11 @@ class DoctorCubit extends Cubit<DoctorState> {
 
   var toController = TextEditingController();
   var fromController = TextEditingController();
-  var key= GlobalKey<FormState>();
+  var key = GlobalKey<FormState>();
   int selectedIndex = 0;
 
-
-
+  DateTime? addRequestDay;
+  var day2;
   List<String> days = [
     AppStrings.saturDay,
     AppStrings.sunDay,
@@ -30,16 +33,30 @@ class DoctorCubit extends Cubit<DoctorState> {
     AppStrings.friDay,
   ];
 
-  doctorRemoveTime(from,to) async{
+  List daysOfRequest = [
+    AppStrings.monDay,
+    AppStrings.tuesDay,
+    AppStrings.wednesDay,
+    AppStrings.thursDay,
+    AppStrings.friDay,
+    AppStrings.saturDay,
+    AppStrings.sunDay,
+  ];
+
+  doctorRemoveTime(num) async {
     await FirebaseFirestore.instance
         .collection("Doctors")
         .doc(CacheHelper.getDoctor().doctorId)
-        .collection("Timer").doc("${selectedIndex}_${from}_${to}").delete();
+        .collection("Timer")
+        .doc("$num ${daysOfRequest[addRequestDay!.weekday - 1]}${addRequestDay!.year}-${addRequestDay!.month}-${addRequestDay!.day}")
+        .delete();
     emit(DoctorRemoveTime());
   }
 
-
-
+  dayName() {
+    day2 = daysOfRequest[addRequestDay!.weekday - 1];
+    emit(DayName());
+  }
 
   void changeSelectedIndex(int index) {
     selectedIndex = index;
@@ -48,12 +65,8 @@ class DoctorCubit extends Cubit<DoctorState> {
 
   addDoctorTimer() async {
     emit(AddDoctorTimerLoading());
+    var num = Random().nextInt(99999);
 
-    // s.docs.forEach((element) {
-    //   print(element.data());
-    // });
-
-    // print(CacheHelper.getDoctor().doctorId);
     if (toController.text.isNotEmpty && fromController.text.isNotEmpty) {
       try {
         await FirebaseFirestore.instance
@@ -61,13 +74,15 @@ class DoctorCubit extends Cubit<DoctorState> {
             .doc(CacheHelper.getDoctor().doctorId)
             .collection("Timer")
             .doc(
-                "${selectedIndex}_${fromController.text}_${toController.text}")
+                "$num ${daysOfRequest[addRequestDay!.weekday - 1]}${addRequestDay!.year}-${addRequestDay!.month}-${addRequestDay!.day}")
             .set({
-          "day": "$selectedIndex",
+          "day": "${daysOfRequest[addRequestDay!.weekday - 1]}",
           "from": fromController.text,
+          "date": addRequestDay!.format(),
           "to": toController.text,
           "active": true,
-          "doctorId": CacheHelper.getDoctor().doctorId
+          "doctorId": CacheHelper.getDoctor().doctorId,
+          "num":num,
         });
         fromController.clear();
         toController.clear();
@@ -78,7 +93,6 @@ class DoctorCubit extends Cubit<DoctorState> {
     }
   }
 
-
   doctorTimesOfDay() async {
     List<AddDoctorTimeModel> data = [];
     emit(TimeLoading());
@@ -87,9 +101,10 @@ class DoctorCubit extends Cubit<DoctorState> {
           .collection("Doctors")
           .doc(CacheHelper.getDoctor().doctorId)
           .collection("Timer")
-          .where("day", isEqualTo: '${selectedIndex}')
+          .where("day",
+              isEqualTo: '${daysOfRequest[addRequestDay!.weekday - 1]}')
+          .where("date", isEqualTo: addRequestDay!.format())
           .get();
-
       s.docs.forEach((element) {
         data.add(AddDoctorTimeModel.fromJson(element.data()));
       });

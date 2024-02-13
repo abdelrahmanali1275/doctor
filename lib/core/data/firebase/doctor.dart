@@ -11,12 +11,6 @@ class FirebaseDoctor {
           .doc(doctorId)
           .get();
 
-      // List<DoctorModel> users=[];
-      //
-      //
-      // res.docs.forEach((element) {
-      //   users.add(DoctorModel.fromJson(element.data()));
-      // });
 
       if (res.data() == null) {
         return Left(ErrorFailure(message: "لا يوجد بيانات متاحة"));
@@ -44,6 +38,11 @@ class FirebaseDoctor {
       return Left(ErrorFailure(message: e.toString()));
     }
   }
-
-
 }
+
+// List<DoctorModel> users=[];
+//
+//
+// res.docs.forEach((element) {
+//   users.add(DoctorModel.fromJson(element.data()));
+// });

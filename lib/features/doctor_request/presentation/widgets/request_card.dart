@@ -3,7 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:esteshary_doctor/core/utils/app_strings.dart';
 import 'package:esteshary_doctor/core/utils/extension/int.dart';
 import 'package:esteshary_doctor/core/utils/extension/widget.dart';
-import 'package:esteshary_doctor/features/doctor_request/presentation/widgets/doctor_accept_dialog.dart';
+import 'package:esteshary_doctor/features/accept_requests/presentation/widgets/notes_dialog.dart';
 
 import '../../../../../core/utils/app_colors.dart';
 import '../../../../config/theme/custom_text_style.dart';
@@ -52,9 +52,9 @@ class RequestCard extends StatelessWidget {
                 Text("يوم الثلاثاء الساعة من 2:00 الى 2:30",
                     style: CustomTextStyles.bodyMediumBlack20001),
                 Spacer(),
-                ElevatedButton(onPressed: (){
-                  showDialog(context: context, builder: (context) => DoctorAcceptAlertDialog(),);
-                }, child: Text(AppStrings.addYourNotes,style: CustomTextStyles.bodyLargeWhiteA700,).paddingAll(5)),
+                // ElevatedButton(onPressed: (){
+                //   showDialog(context: context, builder: (context) => NotesDialog(),);
+                // }, child: Text(AppStrings.addYourNotes,style: CustomTextStyles.bodyLargeWhiteA700,).paddingAll(5)),
               ],
             ),
           ],

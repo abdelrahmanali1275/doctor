@@ -8,6 +8,7 @@ class AppStrings{
   static const String addYourNotes="أضف ملاحظاتك";
   static const String yourTime="مواعيدك" ;
   static const String accept="الحجز المؤكد" ;
+  static const String acceptHagz="طلب مؤكد" ;
   static const String needHelp= "طلب مساعدة" ;
   static const String all= "كل الحجوزات" ;
   static const String room= "كشف اليوم" ;
@@ -46,4 +47,5 @@ class AppStrings{
   static const String send=  "ارسال";
   static const String cacheHelperKey=  "doctor";
   static const String loginSuccess=  "تم تسجيل الدخول بنجاح";
+  static const String requestsCollection=  "Requests";
 }

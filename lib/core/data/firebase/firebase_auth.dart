@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../../helper/error/failure.dart';
 
 class AuthHelper {
-  FirebaseDoctor firebaseDoctor= FirebaseDoctor();
+  FirebaseDoctor firebaseDoctor = FirebaseDoctor();
 
   Future<Either<ErrorFailure, String>> login(
       {required String email, required String pass}) async {
@@ -17,7 +17,4 @@ class AuthHelper {
       return Left(ErrorFailure(message: e.toString()));
     }
   }
-
-
-
 }

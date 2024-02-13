@@ -2,17 +2,11 @@ part of 'doctor_cubit.dart';
 
 @immutable
 abstract class DoctorState {}
-
 class DoctorInitial extends DoctorState {}
-
 class DoctorRemoveTime extends DoctorState {}
-
 class DoctorAddTimeState extends DoctorState {}
-
 class ChangeSelectedIndex extends DoctorState {}
-
 class AddDoctorTimerLoading extends DoctorState {}
-
 class AddDoctorTimerSuccess extends DoctorState {
   final String message;
 
@@ -27,6 +21,8 @@ class AddDoctorTimerErr extends DoctorState {
 
 class TimeLoading extends DoctorState {}
 
+class DayName extends DoctorState {}
+
 class TimeLoaded extends DoctorState {
   final List<AddDoctorTimeModel> data;
 
@@ -35,7 +31,6 @@ class TimeLoaded extends DoctorState {
 
 class TimeErr extends DoctorState {
   final String message;
-
   TimeErr(this.message);
 }
 // final List<DoctorModel> timers;

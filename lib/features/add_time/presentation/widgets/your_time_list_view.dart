@@ -1,10 +1,10 @@
+import 'package:esteshary_doctor/features/add_time/presentation/widgets/your_time_available.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:esteshary_doctor/core/app_export.dart';
 import 'package:esteshary_doctor/core/utils/app_colors.dart';
 import 'package:esteshary_doctor/core/utils/app_strings.dart';
-import 'package:esteshary_doctor/features/doctor/presentation/manager/doctor_cubit.dart';
-import 'package:esteshary_doctor/features/doctor/presentation/widgets/your_time_available.dart';
+import '../manager/doctor_cubit.dart';
 
 class YourTimeListView extends StatelessWidget {
   const YourTimeListView({super.key});
@@ -13,7 +13,7 @@ class YourTimeListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<DoctorCubit, DoctorState>(builder: (context, state) {
       var cubit = DoctorCubit().get(context);
-
+      print(state);
       if (state is TimeLoaded) {
         return Expanded(
           child: ListView.builder(
@@ -38,7 +38,7 @@ class YourTimeListView extends StatelessWidget {
                     timeTo: state.data[index].to,
                     function: () {
                       cubit.doctorRemoveTime(
-                          state.data[index].from, state.data[index].to);
+                          state.data[index].num, );
                     },
                   ),
             itemCount: state.data.isEmpty ? 1 : state.data.length,
@@ -46,10 +46,44 @@ class YourTimeListView extends StatelessWidget {
         );
       }
       if (state is TimeErr) {
+        if (state.message == 'Null check operator used on a null value') {
+          return Center(
+              child: Column(
+            children: [
+              Icon(
+                Icons.hourglass_empty,
+                size: 70,
+                color: AppColors.primary.withOpacity(.5),
+              ),
+              10.height,
+              Text(
+                "برجاء اختيار اليوم لاظهار المواعيد",
+                style: CustomTextStyles.bodyLargeBlack900,
+              ),
+            ],
+          ));
+        }
         return Text(
           state.message,
           style: CustomTextStyles.bodyLargeBlack900Bold20,
         );
+      }
+      if (state is DoctorInitial) {
+        return Center(
+            child: Column(
+          children: [
+            Icon(
+              Icons.hourglass_empty,
+              size: 70,
+              color: AppColors.primary.withOpacity(.5),
+            ),
+            10.height,
+            Text(
+              "برجاء اختيار اليوم لاظهار المواعيد",
+              style: CustomTextStyles.bodyLargeBlack900,
+            ),
+          ],
+        ));
       }
       cubit.doctorTimesOfDay();
       return Center(child: CircularProgressIndicator());
