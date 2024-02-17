@@ -21,7 +21,7 @@ class AcceptRequestsBody extends StatelessWidget {
                     index: index,
                     data: state.data,
                   ).paddingSymmetric(horizontal: 10)
-                : DataEmpty(txt: 'مؤكدة'),
+                : DataEmpty(txt: 'لا توجد حجزوات مؤكدة'),
             itemCount: state.data.isEmpty ? 1 : state.data.length,
           );
         }

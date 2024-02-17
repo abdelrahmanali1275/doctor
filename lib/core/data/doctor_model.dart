@@ -6,6 +6,7 @@ class DoctorModel {
   final String photo;
   final String specialist;
 
+
   DoctorModel(
       {required this.doctorId,
       required this.name,

@@ -48,7 +48,7 @@ class DoctorCubit extends Cubit<DoctorState> {
         .collection("Doctors")
         .doc(CacheHelper.getDoctor().doctorId)
         .collection("Timer")
-        .doc("$num ${daysOfRequest[addRequestDay!.weekday - 1]}${addRequestDay!.year}-${addRequestDay!.month}-${addRequestDay!.day}")
+        .doc("$num")
         .delete();
     emit(DoctorRemoveTime());
   }
@@ -64,7 +64,6 @@ class DoctorCubit extends Cubit<DoctorState> {
   }
 
   addDoctorTimer() async {
-    emit(AddDoctorTimerLoading());
     var num = Random().nextInt(99999);
 
     if (toController.text.isNotEmpty && fromController.text.isNotEmpty) {
@@ -74,7 +73,7 @@ class DoctorCubit extends Cubit<DoctorState> {
             .doc(CacheHelper.getDoctor().doctorId)
             .collection("Timer")
             .doc(
-                "$num ${daysOfRequest[addRequestDay!.weekday - 1]}${addRequestDay!.year}-${addRequestDay!.month}-${addRequestDay!.day}")
+                "$num")
             .set({
           "day": "${daysOfRequest[addRequestDay!.weekday - 1]}",
           "from": fromController.text,

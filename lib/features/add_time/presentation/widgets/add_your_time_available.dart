@@ -158,7 +158,8 @@ class AddYourTimeAvailable extends StatelessWidget {
                         if (cubit.addRequestDay == null) {
                           showToast(
                               text: "برجاء اختيار اليوم من فضلك",
-                              state: ToastStates.error);
+                              state: ToastStates.error,
+                          );
                         }
                       }),
             ],
