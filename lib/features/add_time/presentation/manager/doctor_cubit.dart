@@ -5,6 +5,7 @@ import 'package:esteshary_doctor/core/app_export.dart';
 import 'package:esteshary_doctor/core/helper/save_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../core/utils/app_strings.dart';
 import '../../../../core/data/models/add_doctor_time_model.dart';
@@ -64,7 +65,7 @@ class DoctorCubit extends Cubit<DoctorState> {
   }
 
   addDoctorTimer() async {
-    var num = Random().nextInt(99999);
+
 
     if (toController.text.isNotEmpty && fromController.text.isNotEmpty) {
       try {
@@ -72,8 +73,7 @@ class DoctorCubit extends Cubit<DoctorState> {
             .collection("Doctors")
             .doc(CacheHelper.getDoctor().doctorId)
             .collection("Timer")
-            .doc(
-                "$num")
+            .doc("${DateFormat.yMMMMEEEEd("ar").format(addRequestDay!)}_${fromController.text}_${toController.text}")
             .set({
           "day": "${daysOfRequest[addRequestDay!.weekday - 1]}",
           "from": fromController.text,
@@ -81,7 +81,7 @@ class DoctorCubit extends Cubit<DoctorState> {
           "to": toController.text,
           "active": true,
           "doctorId": CacheHelper.getDoctor().doctorId,
-          "num":num,
+          "num": "${DateFormat.yMMMMEEEEd("ar").format(addRequestDay!)}_${fromController.text}_${toController.text}",
         });
         fromController.clear();
         toController.clear();

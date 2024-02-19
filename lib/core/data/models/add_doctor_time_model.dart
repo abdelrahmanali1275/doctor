@@ -4,7 +4,7 @@ class AddDoctorTimeModel {
   final String to;
   final bool active;
   final String doctorId;
-  final int num;
+  final String num;
 
   AddDoctorTimeModel({
     required this.day,
