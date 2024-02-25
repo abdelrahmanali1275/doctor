@@ -1,5 +1,6 @@
 import 'package:esteshary_doctor/core/data/models/user_model.dart';
-import '../doctor_model.dart';
+
+import 'doctor_model.dart';
 
 class RequestModel {
   final int id;
@@ -13,6 +14,7 @@ class RequestModel {
   final DateTime createdAt;
   final DoctorModel doctor;
   final UserModel user;
+  final String num;
 
   factory RequestModel.fromJson(Map<String, dynamic> json) {
     return RequestModel(
@@ -27,19 +29,22 @@ class RequestModel {
       createdAt: json['createAt'].toDate(),
       doctor: DoctorModel.fromJson(json['doctor']),
       user: UserModel.fromJson(json['user']),
+      num: json['num'],
     );
   }
 
   RequestModel(
       {required this.id,
-      required this.date,
-      required this.day,
-      required this.notes,
-      required this.state,
-      required this.zoomLink,
-      required this.from,
-      required this.to,
-      required this.createdAt,
-      required this.doctor,
-      required this.user});
+        required this.date,
+        required this.day,
+        required this.notes,
+        required this.state,
+        required this.zoomLink,
+        required this.from,
+        required this.to,
+        required this.createdAt,
+        required this.doctor,
+        required this.user,
+        required this.num,
+      });
 }

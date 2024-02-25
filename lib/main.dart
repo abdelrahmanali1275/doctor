@@ -1,12 +1,32 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:esteshary_doctor/config/theme/theme_helper.dart';
 import 'package:esteshary_doctor/core/helper/save_data.dart';
+import 'core/data/firebase/class_notifaction_api.dart';
 import 'features/accept_requests/presentation/manager/accept_requests_cubit.dart';
 import 'features/splash/presentation/pages/splash.dart';
+
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  // If you're going to use other Firebase services in the background, such as Firestore,
+  // make sure you call initializeApp before using other Firebase services.
+
+  print("Handling a background message: ${message.messageId}");
+//عملت كومنت هنااااااااااااااااا
+  // navigatorGlobalKey?.currentState?.pushAndRemoveUntil(
+  //     MaterialPageRoute(
+  //       builder: (context) =>
+  //           NotificationsChatScreen(userId: message.data["id"] ?? ""),
+  //     ),
+  //         (route) => false);
+}
+
+GlobalKey<NavigatorState>? navigatorGlobalKey = GlobalKey<NavigatorState>();
+
+String? deviceToken;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,7 +35,61 @@ void main() async {
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
-  runApp(const MyApp());
+  await NotificationApi.init();
+
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+  NotificationSettings settings = await messaging.requestPermission(
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
+  );
+
+  deviceToken = await messaging.getToken(
+    vapidKey: "BGpdLRs......",
+  );
+  print("token///////$deviceToken");
+
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    print('Got a message whilst in the foreground!');
+    print('Message data: ${message.data}');
+
+    if (message.notification != null) {
+
+
+
+      NotificationApi.notificationsDetails(
+          body: "${message.notification!.body}",
+          title: "${message.notification!.title}",
+          payload: message.data['id']);
+
+    }
+  });
+  FirebaseMessaging.onMessageOpenedApp.listen((event) {
+
+    // navigatorGlobalKey?.currentState?.push(MaterialPageRoute(
+    //   builder: (context) => ChatScreen(userId: event.data["id"] ?? ""),
+    // ));
+  });
+
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+
+  runApp(MyApp());
+}
+
+
+
+adminSubscription(){
+  try {
+    FirebaseMessaging.instance.subscribeToTopic("admin").then((value) => debugPrint("adminSubscription "));
+  }  catch (e) {
+    print(e.toString());
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -27,7 +101,7 @@ class MyApp extends StatelessWidget {
       create: (context) => AcceptRequestsCubit(),
       child: MaterialApp(
         theme: theme,
-        title: 'doctor استشاري تخاطب',
+        title: 'doctor',
         debugShowCheckedModeBanner: false,
         locale: const Locale('ar', ''),
         localizationsDelegates: const [

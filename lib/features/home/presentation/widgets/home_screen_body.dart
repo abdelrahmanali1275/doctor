@@ -3,6 +3,7 @@ import 'package:esteshary_doctor/core/app_export.dart';
 import 'package:esteshary_doctor/core/utils/app_strings.dart';
 import 'package:esteshary_doctor/core/utils/extension/widget.dart';
 import 'package:esteshary_doctor/features/accept_requests/presentation/accept_requests.dart';
+import '../../../../core/data/firebase/class_notifaction_api.dart';
 import '../../../add_time/presentation/add_time.dart';
 import '../../../all_request/history_screen.dart';
 import '../../../zoom_room/presentation/zoom_room_screen.dart';
@@ -20,6 +21,7 @@ class HomeScreenBody extends StatelessWidget {
             image: AppAssets.hagz,
             text: AppStrings.confirmed,
             function: () {
+              NotificationApi.notificationsDetails(body: "body", title: "title", payload: "payload",);
               AcceptRequestsScreen().launch(context);
             },
           ),
